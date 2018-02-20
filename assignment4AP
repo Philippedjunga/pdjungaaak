@@ -1,0 +1,39 @@
+%Philippe Djunga k
+%Homwork4P
+%number with k=10
+clear all;clc;
+%FOR K IS 10
+k=10; L=1; Uo=1; A=1;UL=0;
+N=10;  lambda=k^2;                                                                          %defining the number of interval                                                                                                                                          
+x=zeros(1,N);
+h=L/(N+1);                                                                             %defining the h 
+
+for i=1:N                                                                             %for loop to define the x values and the horizonatal axis
+x(i)=i*h; 
+end 
+u1=(((sinh(k*(L-x))+sinh(k*x))/(sinh(k*L)))-1)*(A/k^2)+Uo*(sinh(k*(L-x)))/(sinh(k*L));    %the exast solution
+                                                                             %the plot for it 
+
+U=zeros(1,N);
+ap=zeros(1,N);g=zeros(1,N);                                                            %ap stands for alpha,and the f is the right handside
+b=ones(1,N);
+b(1)=0;
+c=ones(1,N);
+c(N)=0;
+f=(h^2)*ones(1,N);                                                                       %creating an array f, to be replaced later, did the same for the above on a 
+a=-(2+lambda*h^2)*ones(1,N);
+f(1)=(h^2)-Uo;
+f(N)=(h^2)-UL;
+ap(1)=a(1); g(1)=f(1);
+
+for s=2:N                                                                       %for loops to find all the alpha and g's
+    ap(s)=a(s)-(b(s)/(ap(s-1)))*(c(s-1));
+    g(s)=f(s)-((b(s)/(ap(s-1))))*(g(s-1));
+end
+
+U(N)=g(N)/ap(N);                                                               %generating 
+for p=1:N-1
+U(N-p)=(g(N-p)-c(N-p)*U(N+1-p))/ap(N-p);
+end
+
+plot(x,U,x,u1); 
