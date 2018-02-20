@@ -35,5 +35,7 @@ U(N)=g(N)/ap(N);                                                               %
 for p=1:N-1
 U(N-p)=(g(N-p)-c(N-p)*U(N+1-p))/ap(N-p);
 end
-
 plot(x,U,x,u1); 
+xlabel('x cordinates')
+ylabel('values for U')
+title('approximate value and true value for k=10 and n=1000')
